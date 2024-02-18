@@ -15,8 +15,13 @@ export default function Home() {
 
   }, [isLoggedIn])
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" width="100vw" height="85vh" >
-      <Typography variant="h1" color="text.secondary">Welcome To Todo App</Typography>
+    <Box display="flex" justifyContent="center" alignItems="center" width="100vw" height="80vh" >
+      <Typography variant="h1" color="text.secondary" sx={{
+        fontSize: {
+          xs: 35,
+          lg: 60
+        }
+      }}>Welcome To Todo App</Typography>
     </Box>
   );
 }

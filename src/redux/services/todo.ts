@@ -1,3 +1,4 @@
+import { Todo } from "@/types/todo";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const TodoApi = createApi({
@@ -34,12 +35,33 @@ export const TodoApi = createApi({
       }),
       invalidatesTags: ["TODO"],
     }),
-    getPassengers: builder.query<void, void>({
-      query: () => `/passenger`,
-      // transformResponse: (data: { data: Analytics }) => data.data,
+    getTodos: builder.query<Todo, void>({
+      query: () => `/todos`,
       providesTags: ["TODO"],
+    }),
+    addTodo: builder.mutation({
+      query: (payload) => ({
+        url: "/todos/add",
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["TODO"],
+    }),
+    updateTodo: builder.mutation({
+      query: (payload) => ({
+        url: `todos/${payload.id}`,
+        method: "PUT",
+        body: payload,
+      }),
+      invalidatesTags: ["TODO"],
     }),
   }),
 });
 
-export const { useSignInMutation, useSignUpMutation } = TodoApi;
+export const {
+  useSignInMutation,
+  useSignUpMutation,
+  useGetTodosQuery,
+  useAddTodoMutation,
+  useUpdateTodoMutation,
+} = TodoApi;
