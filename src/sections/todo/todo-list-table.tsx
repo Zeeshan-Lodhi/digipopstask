@@ -73,8 +73,8 @@ export const TodoListTable = (props: TodoInterface) => {
                         <TableCell />
                         <TableCell >Id</TableCell>
                         <TableCell >Todo</TableCell>
-                        <TableCell >Completed</TableCell>
                         <TableCell>User Id</TableCell>
+                        <TableCell >Completed</TableCell>
 
                     </TableRow>
                 </TableHead>
@@ -123,11 +123,11 @@ export const TodoListTable = (props: TodoInterface) => {
                                     <TableCell>
                                         {todo?.todo}
                                     </TableCell>
-                                    <TableCell>
-                                        <Chip label={todo.completed ? "Yes" : "No"} color={todo.completed ? "primary" : "error"} />
-                                    </TableCell>
                                     <TableCell >
                                         {todo.userId}
+                                    </TableCell>
+                                    <TableCell>
+                                        <Chip label={todo.completed ? "Yes" : "No"} color={todo.completed ? "primary" : "error"} />
                                     </TableCell>
                                 </TableRow>
 
