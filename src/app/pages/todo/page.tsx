@@ -1,6 +1,7 @@
 "use client"
 import { useAddTodoMutation, useGetTodosQuery } from '@/redux/services/todo';
 import Addtodo from '@/sections/todo/add-todo';
+import { TodoListSearch } from '@/sections/todo/todo-list-search';
 import { TodoListTable } from '@/sections/todo/todo-list-table';
 import { AddTodo, TodosData } from '@/types/todo';
 import { applyPagination } from '@/utils/apply-pagination';
@@ -24,6 +25,8 @@ const Page = () => {
     const [page, setPage] = useState<number>(0);
     const [todos, setTodos] = useState<TodosData[]>([]);
     const [open, setOpen] = useState(false);
+    const [checkFilter, setCheckFilter] = useState("id")
+    const [search, setSearch] = useState("")
 
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -37,17 +40,39 @@ const Page = () => {
     const HandleData = useCallback(
         () => {
             if (data) {
-                let todos = applyPagination(data?.todos, page, rowsPerPage);
-                setTodos(todos)
-                setCount(data?.total)
+
+                if (checkFilter === "id") {
+                    let fData = data?.todos?.filter((todo) => {
+                        return todo.id?.toString().includes(search)
+                    })
+                    let todos = applyPagination(fData, page, rowsPerPage);
+                    setTodos(todos)
+                    setCount(data?.total)
+                }
+                else if (checkFilter === "todo") {
+                    let fData = data?.todos?.filter((todo) => {
+                        return todo.todo?.toString().includes(search.charAt(0).toUpperCase() + search.slice(1));
+                    })
+                    let todos = applyPagination(fData, page, rowsPerPage);
+                    setTodos(todos)
+                    setCount(data?.total)
+                }
+                else if (checkFilter === "userid") {
+                    let fData = data?.todos?.filter((todo) => {
+                        return todo.userId?.toString().includes(search)
+                    })
+                    let todos = applyPagination(fData, page, rowsPerPage);
+                    setTodos(todos)
+                    setCount(data?.total)
+                }
             }
         },
-        [data, page, rowsPerPage],
+        [data, page, rowsPerPage, search, checkFilter],
     )
 
     useEffect(() => {
         HandleData()
-    }, [page, rowsPerPage])
+    }, [page, rowsPerPage, search, checkFilter])
 
     const handlePageChange = useCallback(
         (event: any, value: any) => {
@@ -105,7 +130,7 @@ const Page = () => {
 
             <Container maxWidth="lg" sx={{ borderRadius: 3, mt: 3 }} >
 
-                <Stack spacing={2} mt={5} >
+                <Stack spacing={3} mt={5} >
                     <Stack direction="row" justifyContent="space-between" >
                         <Stack spacing={1}>
                             <Typography variant="h4"> Todos </Typography>
@@ -130,6 +155,10 @@ const Page = () => {
                             </Formik>
                         </Box>
                     </Modal>
+                    <TodoListSearch
+                        checkFilter={checkFilter} setCheckFilter={setCheckFilter}
+                        search={search} setSearch={setSearch}
+                    />
                     <Card >
                         <Stack p={2}>
                             {isLoading ? (
