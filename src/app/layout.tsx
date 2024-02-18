@@ -1,19 +1,22 @@
-import type { Metadata } from "next";
+"use client"
+import { Navbar } from "@/layout/navbar";
+import { store } from "@/redux/store";
+import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Todo",
-  description: "Digipops todo task",
-};
+export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
   return (
-    <html lang="en">
-      <div>{children}</div>
-    </html>
+    <Provider store={store}>
+      <html lang="en">
+        <title>Todo</title>
+        <body>
+          <Navbar />
+          <Toaster position="bottom-right" toastOptions={{ style: { boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px", } }} />
+          <main>{children}</main>
+        </body>
+      </html>
+    </Provider>
   );
 }
