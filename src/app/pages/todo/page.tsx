@@ -40,31 +40,25 @@ const Page = () => {
     const HandleData = useCallback(
         () => {
             if (data) {
-
+                let fData: TodosData[] = [];
                 if (checkFilter === "id") {
-                    let fData = data?.todos?.filter((todo) => {
+                    fData = data?.todos?.filter((todo) => {
                         return todo.id?.toString().includes(search)
                     })
-                    let todos = applyPagination(fData, page, rowsPerPage);
-                    setTodos(todos)
-                    setCount(data?.total)
                 }
                 else if (checkFilter === "todo") {
-                    let fData = data?.todos?.filter((todo) => {
+                    fData = data?.todos?.filter((todo) => {
                         return todo.todo?.toString().includes(search.charAt(0).toUpperCase() + search.slice(1));
                     })
-                    let todos = applyPagination(fData, page, rowsPerPage);
-                    setTodos(todos)
-                    setCount(data?.total)
                 }
                 else if (checkFilter === "userid") {
-                    let fData = data?.todos?.filter((todo) => {
+                    fData = data?.todos?.filter((todo) => {
                         return todo.userId?.toString().includes(search)
                     })
-                    let todos = applyPagination(fData, page, rowsPerPage);
-                    setTodos(todos)
-                    setCount(data?.total)
                 }
+                let todos = applyPagination(fData, page, rowsPerPage);
+                setTodos(todos)
+                setCount(fData.length)
             }
         },
         [data, page, rowsPerPage, search, checkFilter],
