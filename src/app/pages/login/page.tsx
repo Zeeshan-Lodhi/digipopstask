@@ -1,7 +1,7 @@
 "use client"
 import { login } from '@/redux/authSlice';
 import { useSignInMutation } from '@/redux/services/todo';
-import Box from '@mui/material/Box';
+import { Container } from '@mui/material';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -56,9 +56,7 @@ const Page = () => {
 
     return (
         <>
-
-            <Box width="50vw" margin="auto" mt={12}>
-
+            <Container sx={{ mt: 12 }}>
                 <Card >
                     <CardHeader
                         sx={{ pb: 0 }}
@@ -108,7 +106,7 @@ const Page = () => {
                         </Typography>
                     </CardContent>
                 </Card>
-            </Box >
+            </ Container>
 
         </>
     );
